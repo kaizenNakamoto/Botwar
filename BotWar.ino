@@ -5,10 +5,11 @@ const char* ssid = "bot";
 const char* password = "12345678";
 String req="stop";
 String profile="p1";
+int atflag=1;
 // Create an instance of the server
 // specify the port to listen on as an argument
 WiFiServer server(80);
-int m[8]={16,5,4,0,14,12,3,1};
+int m[9]={16,5,4,0,14,12,3,1,2};
 void setup() {
   Serial.begin(115200);
   delay(10);
@@ -30,8 +31,10 @@ void setup() {
 
   // Print the IP address
   Serial.println(WiFi.localIP());
-  for(int j=0;j<8;j++)
+  for(int j=0;j<9;j++)
   pinMode(m[j],OUTPUT);
+
+ digitalWrite(m[9],LOW); 
   
 }
 
@@ -45,8 +48,7 @@ void loop() {
   if (!client) {
     motion(profile,req);
     return;
-  }
-  
+  } 
   // Wait until the client sends some data
  // Serial.println("new client");
   while(!client.available()){
@@ -73,6 +75,10 @@ void loop() {
  else if(req=="p2"){
  req="stop"; 
  profile="p2";}
+ if(req=="attack")
+ {req="stop";
+  attack();
+  }
   // The client will actually be disconnected 
   // when the function returns and 'client' object is detroyed
 }
@@ -81,8 +87,6 @@ void motion(String prof,String request){
   if(prof=="p1"){
    if(request=="stop")
    halt();
-   if(request=="attack")
-   attack();
    if(request=="forward")
    forward();
    if(request=="back")
@@ -95,16 +99,14 @@ void motion(String prof,String request){
   else if(prof=="p2"){
    if(request=="stop")
    halt();
-   if(request=="attack")
-   attack();
    if(request=="forward")
    back();
    if(request=="back")
    forward();
    if(request=="left")
-   right();
+   left2();
    if(request=="right")
-   left();
+   right2();
   }
   else
   halt();
@@ -141,22 +143,84 @@ Serial.println("stop");
   Serial.println("left");
     digitalWrite(m[0],0);//1st row right motor
   digitalWrite(m[1],1);
-  digitalWrite(m[2],0);//1st row left motor
-  digitalWrite(m[3],1);
-  digitalWrite(m[4],0);//2nd row right motor
+    digitalWrite(m[4],0);//2nd row right motor
   digitalWrite(m[5],1);
+  
+    digitalWrite(m[2],0);//1st row left moto
+  digitalWrite(m[3],1);
+  
   digitalWrite(m[6],0);//2nd row left motor
-  digitalWrite(m[7],1);}
+  digitalWrite(m[7],1);
+  delay(30);
+    
+    digitalWrite(m[2],0);//1st row left moto
+  digitalWrite(m[3],0);
+  
+  digitalWrite(m[6],0);//2nd row left motor
+  digitalWrite(m[7],0);
+  delay(70);
+  
+  }
  void right(){
   Serial.println("right");
-    digitalWrite(m[0],1);//1st row right motor
-  digitalWrite(m[1],0);
   digitalWrite(m[2],1);//1st row left motor
   digitalWrite(m[3],0);
+  digitalWrite(m[6],1);//2nd row left motor
+  digitalWrite(m[7],0);
+    digitalWrite(m[0],1);//1st row right motor
+  digitalWrite(m[1],0);
+    digitalWrite(m[4],1);//2nd row right motor
+  digitalWrite(m[5],0);
+  
+  delay(30);
+      digitalWrite(m[0],0);//1st row right motor
+  digitalWrite(m[1],0);
+      digitalWrite(m[4],0);//2nd row right motor
+  digitalWrite(m[5],0);
+  
+  delay(70);
+  }
+
+ void right2(){
+  
+    digitalWrite(m[0],1);//1st row right motor
+  digitalWrite(m[1],0);
   digitalWrite(m[4],1);//2nd row right motor
   digitalWrite(m[5],0);
+    digitalWrite(m[2],1);//1st row left motor
+  digitalWrite(m[3],0);
   digitalWrite(m[6],1);//2nd row left motor
-  digitalWrite(m[7],0);}
+  digitalWrite(m[7],0);
+  delay(35);
+    digitalWrite(m[2],0);//1st row left motor
+  digitalWrite(m[3],0);
+  digitalWrite(m[6],0);//2nd row left motor
+  digitalWrite(m[7],0);
+  delay(65);
+  
+  }
+  void left2(){
+      digitalWrite(m[0],0);//1st row right motor
+  digitalWrite(m[1],1);
+  digitalWrite(m[4],0);//2nd row right motor
+  digitalWrite(m[5],1);
+    digitalWrite(m[2],0);//1st row left motor
+  digitalWrite(m[3],1);
+  digitalWrite(m[6],0);//2nd row left motor
+  digitalWrite(m[7],1);
+  delay(35);
+      digitalWrite(m[0],0);//1st row right motor
+  digitalWrite(m[1],0);
+  digitalWrite(m[4],0);//2nd row right motor
+  digitalWrite(m[5],0);
+  delay(65);
+      
+    }
  void attack(){
-  halt();
+  if(atflag==1){
+    digitalWrite(m[8],1);
+    atflag=0;}
+  else{
+    digitalWrite(m[8],0);
+    atflag=1;}
   Serial.println("attack");}
