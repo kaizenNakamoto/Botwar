@@ -1,6 +1,5 @@
 
-#include <ESP8266WiFi.h>
-
+#include <ESP8266WiFi.h> //header file declaration
 const char* ssid = "bot";
 const char* password = "12345678";
 String req="stop";
