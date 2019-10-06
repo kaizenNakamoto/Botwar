@@ -1,8 +1,8 @@
 
 #include <ESP8266WiFi.h>
 
-const char* ssid = "bot";
-const char* password = "12345678";
+const char* ssid = "botwar";
+const char* password = "abcdefg";
 String req="stop";
 String profile="p1";
 int atflag=1;
