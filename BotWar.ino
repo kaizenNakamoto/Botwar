@@ -1,4 +1,4 @@
-
+// for node mcu
 #include <ESP8266WiFi.h>
 
 const char* ssid = "bot";
