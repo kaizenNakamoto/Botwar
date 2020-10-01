@@ -11,7 +11,7 @@ int atflag=1;
 WiFiServer server(80);
 int m[9]={16,5,4,0,14,12,3,1,2};
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200); //Baud rate is set to 115200
   delay(10);
   Serial.println();
   Serial.println();
