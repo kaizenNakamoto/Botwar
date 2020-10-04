@@ -1,6 +1,7 @@
 
 #include <ESP8266WiFi.h>
 
+const char* dummy_var = "dummy";
 const char* ssid = "bot";
 const char* password = "12345678";
 String req="stop";
